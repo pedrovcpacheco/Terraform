@@ -6,7 +6,7 @@ resource "openstack_compute_instance_v2" "name" {
   key_pair        = var.key_pair
   security_groups = ["default"]
   network {
-    name = "network_private_portalsemiarido"
+    name = "network_private_name"
   }
  }
 
