@@ -1,0 +1,16 @@
+---
+- hosts: all
+  become: yes
+  #strategy: debug
+  #any_errors_fatal: true
+  #no_log: true
+  #gather_facts: True
+  #gather_subset: hardware
+  roles:
+    - { role: confbase }
+    - { role: ntp }
+    - { role: docker-host }
+
+  
+
+  
