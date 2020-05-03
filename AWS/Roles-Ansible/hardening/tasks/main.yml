@@ -1,0 +1,17 @@
+---
+- name: Compatibility check
+  fail: msg="This role is only compatible with Linux"
+  when: ansible_system != 'Linux'
+
+- name: Configure ConfDev Client
+  import_tasks: install.yml
+  ignore_errors: True
+  tags: hardening
+
+- name: Configure ConfDev Client
+  import_tasks: configure_configs.yml
+  ignore_errors: True
+  tags: hardening
+
+
+

@@ -1,0 +1,36 @@
+---
+ - name: Definindo configuração do serviço NTP
+   when: ansible_distribution_version == "16.04"
+   copy:
+     src: ntp.conf
+     dest: /etc/ntp.conf
+     owner: root
+     group: root
+     mode: 0644
+   notify:
+     - Restart NTP
+   tags: ntp
+   
+ - name: Definindo configuração do serviço NTP
+   when: ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+   copy:
+     src: ntp.conf
+     dest: /etc/ntp.conf
+     owner: root
+     group: root
+     mode: 0644
+   notify:
+     - RedHat Restart NTP
+   tags: ntp
+ 
+ - name: Definindo configuração do serviço NTP
+   when: ansible_distribution_version == "14.04"
+   copy:
+     src: ntp.conf
+     dest: /etc/ntp.conf
+     owner: root
+     group: root
+     mode: 0644
+   notify:
+     - Restart NTP
+   tags: ntp

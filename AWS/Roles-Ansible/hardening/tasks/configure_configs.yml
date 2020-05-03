@@ -1,0 +1,63 @@
+---
+- name: Setar algoritmo mais forte - SHA512
+  shell: 
+    cmd: |
+      authconfig --passalgo=sha512 --update 
+      sed -i s/"# auth       required   pam_wheel.so"/" auth       required   pam_wheel.so"/g /etc/pam.d/su 
+      gpasswd -a {{ usuario }} wheel
+      exit 0
+  args:
+   warn: False
+
+- name: Configurando sshd_config
+  ignore_errors: True
+  template: 
+    src: "{{ ansible_facts['distribution'] }}.j2"
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: 0644
+  notify: 
+      - SSHD Restart
+  
+- name: Desabilitar acesso remoto portmap e Configuraçoes de Host
+  template: 
+    src: "{{ item }}.j2"
+    dest: "/etc/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  loop: 
+    - hosts
+    - host.conf
+    - hosts.allow
+    - resolv.conf
+  notify: 
+    - Hostname Reload
+
+- name: Desabilitar Ipv6 - parte 1
+  when: ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+  shell: 
+    cmd: |
+      sed -i s/NETWORKING_IPV6=yes/NETWORKING_IPV6=no/g  /etc/sysconf/network 
+      exit 0
+  args:
+   warn: False
+
+- name: Desabilitar Ipv6 - parte 2
+  when: ansible_distribution == "RedHat" or ansible_distribution == "CentOS" 
+  copy: 
+    src: disable-ipv6
+    dest: /etc/modprobe.d
+    owner: root
+    group: root
+    mode: 0644
+    
+- name: Habilitar serviço ufw no boot
+  when: ansible_distribution == "Ubuntu"
+  systemd:
+    name: ufw
+    enabled: yes
+    state: restarted    
+
+  

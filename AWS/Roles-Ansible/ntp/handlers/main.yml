@@ -1,0 +1,23 @@
+---
+
+- name: Start NTP
+  service: name=ntp state=started 
+
+- name: RedHat NTP
+  service: name=ntp state=started 
+
+- name: Start NTP
+  service: name=ntp state=started
+
+- name: Restart NTP
+  service: name=ntp state=restarted 
+
+- name: RedHat Restart NTP
+  service: name=ntp state=restarted 
+
+- name: Restart NTP
+  service: name=ntp state=restarted 
+
+
+
+

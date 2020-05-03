@@ -1,0 +1,3 @@
+portmap: localhost
+portmap: 127.0.0.1
+portmap: {{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}

@@ -1,0 +1,12 @@
+---
+- name: SSHD Restart
+  systemd:
+    name=sshd
+    state=restarted
+
+- name: Remount
+  command: mount -o remount {{ mount_point }} 
+  ignore_errors: True
+  
+- name: Hostname Reload
+  command:  hostnamectl set-hostname {{ ansible_hostname }}

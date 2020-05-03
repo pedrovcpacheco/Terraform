@@ -1,0 +1,11 @@
+---
+usuario: 
+
+myfiles:
+  - [ "../templates/{{ ansible_facts['distribution'] }}.j2", ../templates/sshd_config.j2 ]
+  
+fstype: ext4
+mount_point: /tmp
+
+dns: 
+

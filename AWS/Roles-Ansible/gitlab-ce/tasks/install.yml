@@ -1,0 +1,17 @@
+---
+- name: Intall repo for gitlab-ce
+  shell: 
+    cmd: |
+      curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash 
+      exit 0
+  args:
+   warn: False
+
+- name: Install gitlab-ce
+  when: ansible_distribution_version == "16.04"
+  apt:
+    name: gitlab-ce
+    state: present
+    update_cache: yes
+
+

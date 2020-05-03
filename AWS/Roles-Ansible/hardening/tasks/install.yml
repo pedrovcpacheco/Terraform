@@ -1,0 +1,12 @@
+---
+- name: Instalação de pacote do pacote ufw
+  when: ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+  yum:
+    name: ufw
+    state: present
+    update_cache: yes
+  register: installed
+  
+  
+    
+  

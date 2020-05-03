@@ -1,0 +1,62 @@
+---
+- name: set timezone to America/Recife
+  timezone:
+    name: America/Recife
+  tags: ntp
+
+- name: Instalar serviço NTP
+  when: ansible_distribution_version == "16.04"
+  apt:
+    name: ntp
+    state: present
+    update_cache: true
+  notify:
+    - Start NTP
+  tags: ntp
+
+- name: Instalar serviço NTP
+  when: ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+  yum:
+    name: ntp
+    state: present
+    disablerepo: epel
+    update_cache: yes
+  notify:
+    - RedHat NTP
+  tags: ntp
+
+- name: Instalar serviço NTP
+  when: ansible_distribution_version == "14.04"
+  apt:
+    name: ntp
+    state: present
+    update_cache: yes
+  notify:
+    - Start NTP
+  tags: ntp
+
+- name: Inicializar o serviço NTP
+  when: ansible_distribution_version == "16.04"
+  service:
+    name: ntp
+    state: started
+    enabled: yes
+  tags: ntp
+
+- name: Inicializar o serviço NTP
+  when: ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+  systemd:
+    name: ntpd
+    state: restarted
+    enabled: yes
+    masked: no
+    scope: system
+  tags: ntp
+
+- name: Inicializar o serviço NTP
+  when: ansible_distribution_version == "14.04"
+  service:
+    name: ntp
+    state: started
+    enabled: yes
+  tags: ntp

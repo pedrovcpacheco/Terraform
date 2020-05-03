@@ -1,0 +1,5 @@
+---
+- name: Install gitlab-ce
+  import_tasks: install.yml
+  ignore_errors: True
+  tags: gitlab
