@@ -1,0 +1,11 @@
+# Disable Local terraform directories
+**/.terraform/*
+
+# Disable tfstate files
+*.tfstate
+*.tfstate.*
+
+# Disable ENV and logs
+.enviroment_local
+*.log
+terraform.exe
