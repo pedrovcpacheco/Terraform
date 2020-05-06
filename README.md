@@ -1,1 +1,1 @@
-# Terraform with provider OpenStack
+# Terraform with providers OpenStack/AWS
